@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  collectd:
+    image: hsmtkk/carbon-relay-ng_profile/collectd:latest
+  carbon-relay-ng:
+    image: hsmtkk/carbon-relay-ng_profile/carbon-relay-ng:latest
+  graphite:
+    image: graphiteapp/graphite-statsd:1.1.7-9
+  process-exporter:
+    image: ncabatoff/process-exporter:0.7.5
+    privileged: true
+    entrypoint:
+      - process-exporter
+      - -config.path
+      - /etc/process-exporter.yml
+      - -procfs
+      - /host/proc
+    volumes:
+      - "/proc:/host/proc"
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - "prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+    ports:
+      - "9090:9090"
