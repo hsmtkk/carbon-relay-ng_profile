@@ -2,6 +2,8 @@ version: "3.9"
 services:
   collectd:
     image: hsmtkk/carbon-relay-ng_profile/collectd:latest
+    deploy:
+      replicas: 4
   carbon-relay-ng:
     image: hsmtkk/carbon-relay-ng_profile/carbon-relay-ng:latest
   graphite:
@@ -12,11 +14,12 @@ services:
     entrypoint:
       - process-exporter
       - -config.path
-      - /etc/process-exporter.yml
+      - /usr/local/etc/process-exporter.yml
       - -procfs
       - /host/proc
     volumes:
       - "/proc:/host/proc"
+      - "./process-exporter/process-exporter.yml:/usr/local/etc/process-exporter.yml:ro"
   prometheus:
     image: prom/prometheus
     volumes:
