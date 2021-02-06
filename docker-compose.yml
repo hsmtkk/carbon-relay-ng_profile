@@ -6,6 +6,8 @@ services:
       replicas: 4
   carbon-relay-ng:
     image: hsmtkk/carbon-relay-ng_profile/carbon-relay-ng:latest
+    ports:
+      - "8081:8081"
   graphite:
     image: graphiteapp/graphite-statsd:1.1.7-9
   process-exporter:
