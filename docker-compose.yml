@@ -4,10 +4,18 @@ services:
     image: hsmtkk/carbon-relay-ng_profile/collectd:latest
     deploy:
       replicas: 4
-  carbon-relay-ng:
+  bad-relay:
     image: hsmtkk/carbon-relay-ng_profile/carbon-relay-ng:latest
+    volumes:
+      - "./carbon-relay-ng/bad.ini:/usr/local/etc/carbon-relay-ng.ini:ro"
     ports:
-      - "8081:8081"
+      - "18081:8081"
+  good-relay:
+    image: hsmtkk/carbon-relay-ng_profile/carbon-relay-ng:latest
+    volumes:
+      - "./carbon-relay-ng/good.ini:/usr/local/etc/carbon-relay-ng.ini:ro"
+    ports:
+      - "28081:8081"
   graphite:
     image: graphiteapp/graphite-statsd:1.1.7-9
   process-exporter:

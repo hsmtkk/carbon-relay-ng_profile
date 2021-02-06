@@ -22,8 +22,6 @@ ADD https://golang.org/dl/go1.15.8.linux-amd64.tar.gz /usr/local
 
 RUN tar fxz go1.15.8.linux-amd64.tar.gz && rm go1.15.8.linux-amd64.tar.gz
 
-COPY carbon-relay-ng/carbon-relay-ng.ini /usr/local/etc/carbon-relay-ng.ini
-
 EXPOSE 2003 8081
 
 ENTRYPOINT ["/usr/local/sbin/carbon-relay-ng", "-enable-pprof", "/usr/local/etc/carbon-relay-ng.ini"]
